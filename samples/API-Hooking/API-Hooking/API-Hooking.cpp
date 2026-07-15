@@ -21,10 +21,15 @@ unsigned char shellcode[] = {
 };
 
 LONG WINAPI handler(struct _EXCEPTION_POINTERS *ExceptionInfo) {
+    // Checking if the exception code is a Page Guard violation
     if (ExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_GUARD_PAGE_VIOLATION)
     {
-        MessageBoxA(NULL, "WinExec has been hooked", "hook", MB_OK);
-        return EXCEPTION_CONTINUE_EXECUTION;
+        // Checking if the exception occured on calling WinExec
+        if (ExceptionInfo->ContextRecord->Rip == DWORD64(WinExec)) {
+            MessageBoxA(NULL, "WinExec has been hooked", "hook", MB_OK);
+            return EXCEPTION_CONTINUE_EXECUTION;
+        }
+        
     }
     return EXCEPTION_CONTINUE_SEARCH;
 }
@@ -34,29 +39,21 @@ int main()
     DWORD old = 0;
 
     // Allocate executable memory
-    void* exec_mem = VirtualAlloc(
-        NULL,
-        sizeof(shellcode),
-        MEM_COMMIT | MEM_RESERVE,
-        PAGE_EXECUTE_READWRITE
-    );
-
-    if (!exec_mem) {
-        printf("VirtualAlloc failed: %lu\n", GetLastError());
-        return 1;
-    }
+    void* exec_mem = VirtualAlloc(NULL, sizeof(shellcode), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 
     // Copy shellcode into allocated memory
     RtlMoveMemory(exec_mem, shellcode, sizeof(shellcode));
 
+    // Register Vectored Exception Handler
     AddVectoredExceptionHandler(1, handler);
 
+    // Set up PAGE_GUARD on WinExec
+    // WinExec is being called in the shellcode to spawn a calc
     VirtualProtect(WinExec, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &old);
 
-    // Cast to function pointer and execute
+    // Creating a thread with the shellcode and running it
     HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)exec_mem, NULL, 0, NULL);
     WaitForSingleObject(hThread, INFINITE);
 
-    // (Never reached – shellcode runs calc.exe)
     return 0;
 }
