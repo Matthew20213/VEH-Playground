@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NInja_Guard.cpp">
+    <ClCompile Include="Ninja_Guard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
