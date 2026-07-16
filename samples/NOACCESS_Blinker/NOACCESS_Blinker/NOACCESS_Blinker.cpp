@@ -121,7 +121,6 @@ int main() {
     int iter = 0;
     while (true) {
         iter++;
-        
 
         HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)exec_mem, NULL, 0, NULL);
         if (!hThread) break;
