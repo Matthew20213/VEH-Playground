@@ -22,19 +22,19 @@ VEH allows us to intercept exceptions like `PAGE_GUARD` or `PAGE_NOACCESS` viola
 ---
 
 ## PoCs Overview
-
 | # | PoC | Description | Key Technique |
 | :---: | :--- | :--- | :--- |
 | 01 | **Basic Handler** | Minimal VEH registration and exception handling. | `AddVectoredExceptionHandler` |
 | 02 | **Handler Priority** | Demonstrates VEH chain order and priority. | Priority flags (1 = first, 0 = last) |
 | 03 | **Exception Information** | Extracts exception record and CPU context. | `ExceptionRecord` + `ContextRecord` |
 | 04 | **Context Modification** | Modifies CPU registers (RCX) inside the handler. | `ContextRecord->Rcx` |
-| 05 | **PAGE_GUARD Handling** | One‑shot decryption on `PAGE_GUARD` violation. | `PAGE_GUARD` + VEH |
-| 06 | **PAGE_NOACCESS Handling** | Persistent decryption on `PAGE_NOACCESS` violation. | `PAGE_NOACCESS` + VEH |
-| 07 | **API Hooking** | Hooks `WinExec` with `PAGE_GUARD` and redirects execution. | `PAGE_GUARD` on API + VEH |
-| 08 | **Ninja Guard** | Intercepts `WinExec`, hides shellcode during API call. | Guard + redirect + hide |
-| 09 | **NOACCESS Blinker** | Loop: encrypt → NOACCESS → decrypt on access → re‑encrypt. | AES + Base64 + `PAGE_NOACCESS` |
-| 10 | **PAGE Lazy Decryption** | Per‑page decryption + re‑encryption using Trap Flag. | `PAGE_GUARD` + `TF` + single‑step |
+| 05 | **RIP Redirection** | Redirects execution to a custom function by modifying `RIP`. | `ContextRecord->Rip` hijacking |
+| 06 | **PAGE_GUARD Handling** | One‑shot decryption on `PAGE_GUARD` violation. | `PAGE_GUARD` + VEH |
+| 07 | **PAGE_NOACCESS Handling** | Persistent decryption on `PAGE_NOACCESS` violation. | `PAGE_NOACCESS` + VEH |
+| 08 | **API Hooking** | Hooks `WinExec` with `PAGE_GUARD` and redirects execution. | `PAGE_GUARD` on API + VEH |
+| 09 | **Ninja Guard** | Intercepts `WinExec`, hides shellcode during API call. | Guard + redirect + hide |
+| 10 | **NOACCESS Blinker** | Loop: encrypt → NOACCESS → decrypt on access → re‑encrypt. | AES + Base64 + `PAGE_NOACCESS` |
+| 11 | **PAGE Lazy Decryption** | Per‑page decryption + re‑encryption using Trap Flag. | `PAGE_GUARD` + `TF` + single‑step |
 
 ---
 
