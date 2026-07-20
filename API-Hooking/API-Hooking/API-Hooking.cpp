@@ -25,8 +25,9 @@ LONG WINAPI handler(struct _EXCEPTION_POINTERS *ExceptionInfo) {
 
 int main()
 {
+    // Load shellcode
     ifstream infile;
-    infile.open(R"(D:\Maldev\shellcodes\calc.bin)", std::ios::in | std::ios::binary);
+    infile.open(R"(../../calc.bin)", std::ios::in | std::ios::binary);
     infile.seekg(0, std::ios::end);
     size_t file_size_in_byte = infile.tellg();
     shellcode.resize(file_size_in_byte);

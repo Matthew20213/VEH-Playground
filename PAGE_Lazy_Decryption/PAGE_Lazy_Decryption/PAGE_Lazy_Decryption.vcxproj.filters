@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Basic Handler.cpp">
+    <ClCompile Include="PAGE_Lazy_Decryption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{aece0277-5589-4ded-b3e7-eec2b157263a}</ProjectGuid>
-    <RootNamespace>BasicHandler</RootNamespace>
+    <ProjectGuid>{754b89af-b4d8-4fb8-a212-9bb020f59d80}</ProjectGuid>
+    <RootNamespace>PAGELazyDecryption</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -123,7 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Basic Handler.cpp" />
+    <ClCompile Include="PAGE_Lazy_Decryption.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
