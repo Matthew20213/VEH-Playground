@@ -12,7 +12,7 @@ LONG WINAPI handler(struct _EXCEPTION_POINTERS *ExceptionInfo)
     // Handle only access violations generated in this PoC.
     if (ExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_ACCESS_VIOLATION)
     {
-        std::cout << "Access Violation!" << std::endl;
+        printf("Access Violation!\n");
 	}
 
     // Inform the dispatcher that the exception has been handled

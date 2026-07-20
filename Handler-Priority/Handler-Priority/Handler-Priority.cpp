@@ -4,7 +4,7 @@
 // Handler inserted at the front of the VEH chain.
 LONG WINAPI Handler1(EXCEPTION_POINTERS*)
 {
-    std::cout << "Handler 1 called\n";
+    printf("Handler 1 called\n");
 
     // Continue traversing the remaining handlers.
     return EXCEPTION_CONTINUE_SEARCH;
@@ -13,7 +13,7 @@ LONG WINAPI Handler1(EXCEPTION_POINTERS*)
 // Handler inserted at the back of the VEH chain.
 LONG WINAPI Handler2(EXCEPTION_POINTERS*)
 {
-    std::cout << "Handler 2 called\n";
+    printf("Handler 2 called\n");
 
     // Continue traversing the remaining handlers.
     return EXCEPTION_CONTINUE_SEARCH;
@@ -23,7 +23,7 @@ LONG WINAPI Handler2(EXCEPTION_POINTERS*)
 // Since it is registered after Handler1, it will be invoked first.
 LONG WINAPI Handler3(EXCEPTION_POINTERS*)
 {
-    std::cout << "Handler 3 called\n";
+    printf("Handler 3 called\n");
 
     return EXCEPTION_CONTINUE_SEARCH;
 }
@@ -31,7 +31,7 @@ LONG WINAPI Handler3(EXCEPTION_POINTERS*)
 // Final handler that terminates the exception dispatch.
 LONG WINAPI Handler4(EXCEPTION_POINTERS*)
 {
-    std::cout << "Handler 4 called\n";
+    printf("Handler 4 called\n");
 
     // Stop searching and resume execution.
     return EXCEPTION_CONTINUE_EXECUTION;
