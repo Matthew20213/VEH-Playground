@@ -16,7 +16,7 @@ Vectored Exception Handling (VEH) is a Windows mechanism that allows application
 - Provide access to the **full CPU context** (`CONTEXT` structure).
 - Can **modify execution flow** by altering `RIP`, registers, or memory.
 
-**Why does this matter for evasion?**  
+**Why does this matter for malware development?**  
 VEH allows us to intercept exceptions like `PAGE_GUARD` or `PAGE_NOACCESS` violations and perform actions (decryption, redirection, hooking) **transparently** – the shellcode doesn't know it's being monitored.
 
 ---
