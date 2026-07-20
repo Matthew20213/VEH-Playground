@@ -1,7 +1,7 @@
 # VEH-Playground – Vectored Exception Handling for Malware Development
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Windows](https://img.shields.io/badge/Platform-Windows-blue)](https://www.microsoft.com/windows)
+[![Research](https://img.shields.io/badge/Purpose-Research-purple)](https://github.com/)
 
 > A comprehensive collection of proof‑of‑concept loaders demonstrating the use of Windows Vectored Exception Handlers (VEH) for stealthy shellcode execution, lazy decryption, API hooking, and execution flow manipulation.
 
@@ -52,3 +52,7 @@ VEH allows us to intercept exceptions like `PAGE_GUARD` or `PAGE_NOACCESS` viola
    ```bash
    git clone https://github.com/Matthew20213/VEH-Playground.git
    cd VEH-Playground
+
+## ⚠️ Disclaimer
+
+This repository is for **educational and research purposes only**. The techniques demonstrated are intended to help security professionals understand Windows internals and evasion methods. Do not use this code for malicious purposes. The author is not responsible for any misuse.
