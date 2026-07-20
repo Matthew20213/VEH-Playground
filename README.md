@@ -48,8 +48,7 @@ VEH allows us to intercept exceptions like `PAGE_GUARD` or `PAGE_NOACCESS` viola
 
 ### Build Instructions
 
-1. Clone the repository:
-   ```bash
+   **```bash
    git clone https://github.com/Matthew20213/VEH-Playground.git
    cd VEH-Playground
 
