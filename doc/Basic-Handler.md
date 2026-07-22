@@ -71,7 +71,7 @@ Returning `EXCEPTION_CONTINUE_EXECUTION` informs the Windows exception dispatche
 Figure 1 demonstrates the successful interception of the manually generated access violation by the registered vectored exception handler.
 
 <p align="center">
-    <img src="../assets/basic-handler-output.png" width="700">
+    <img src="../assets/Basic-Handler.png" width="700">
 </p>
 
 <p align="center">
