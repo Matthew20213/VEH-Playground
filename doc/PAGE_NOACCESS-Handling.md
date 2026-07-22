@@ -106,14 +106,14 @@ Memory Read Completes
 
 ## Expected Output
 
-Figure 7 demonstrates generating STATUS_GUARD_PAGE_VIOLATION during the first access to guarded memory, showing the exception information captured by the vectored exception handler before execution resumes.
+Figure 7 demonstrates generating STATUS_ACCESS_VIOLATION when accessing a PAGE_NOACCESS memory region, followed by restoration of the original page protection inside the vectored exception handler before execution resumes.
 
 <p align="center">
     <img src="../assets/PAGE_NOACCESS-Handling.png" width="700">
 </p>
 
 <p align="center">
-<i>Figure7 - Successful execution of the RIP-Redirection proof of concept.</i>
+<i>Figure7 - Successful execution of the PAGE_NOACCESS-Handling proof of concept.</i>
 </p>
 
 ---
