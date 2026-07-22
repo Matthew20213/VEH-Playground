@@ -44,10 +44,9 @@ Each handler returns one of the following values:
 - `EXCEPTION_CONTINUE_SEARCH`
 - `EXCEPTION_CONTINUE_EXECUTION`
 
-The first three handlers return `EXCEPTION_CONTINUE_SEARCH`, instructing Windows to continue traversing the remaining handlers. :contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4} :contentReference[oaicite:5]{index=5}
+The first three handlers return `EXCEPTION_CONTINUE_SEARCH`, instructing Windows to continue traversing the remaining handlers.
 
-The final handler returns `EXCEPTION_CONTINUE_EXECUTION`, terminating the dispatch process and allowing the application to resume execution. :contentReference[oaicite:6]{index=6}
-
+The final handler returns `EXCEPTION_CONTINUE_EXECUTION`, terminating the dispatch process and allowing the application to resume execution.
 ---
 
 ## Execution Flow
