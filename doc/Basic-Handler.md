@@ -68,9 +68,15 @@ Returning `EXCEPTION_CONTINUE_EXECUTION` informs the Windows exception dispatche
 
 ## Expected Output
 
-```
-![Basic Handler Output](../assets/Basic-Handler.png)
-```
+Figure 1 demonstrates the successful interception of the manually generated access violation by the registered vectored exception handler.
+
+<p align="center">
+    <img src="../assets/basic-handler-output.png" width="700">
+</p>
+
+<p align="center">
+<i>Figure 1 - Successful execution of the Basic Handler proof of concept.</i>
+</p>
 
 ---
 
