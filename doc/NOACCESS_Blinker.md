@@ -2,21 +2,21 @@
 
 ## Overview
 
-This proof of concept demonstrates a cyclic payload protection mechanism using **PAGE_NOACCESS** and **Vectored Exception Handling (VEH)**. Instead of keeping the payload permanently executable in memory, the shellcode is stored in an **AES-encrypted** and **Base64-encoded** form before being protected with **PAGE_NOACCESS**. :contentReference[oaicite:0]{index=0}
+This proof of concept demonstrates a cyclic payload protection mechanism using **PAGE_NOACCESS** and **Vectored Exception Handling (VEH)**. Instead of keeping the payload permanently executable in memory, the shellcode is stored in an **AES-encrypted** and **Base64-encoded** form before being protected with **PAGE_NOACCESS**.
 
-When execution of the protected memory is attempted, Windows raises a **STATUS_ACCESS_VIOLATION** exception. The registered VEH intercepts the exception, restores read/write permissions, decrypts and decodes the payload, and changes the protection to executable before resuming execution. :contentReference[oaicite:1]{index=1}
+When execution of the protected memory is attempted, Windows raises a **STATUS_ACCESS_VIOLATION** exception. The registered VEH intercepts the exception, restores read/write permissions, decrypts and decodes the payload, and changes the protection to executable before resuming execution.
 
-Once the payload has finished executing, it is immediately encoded, encrypted, and protected with **PAGE_NOACCESS** again. This cycle repeats for every execution attempt, allowing the payload to remain in an unreadable state for the majority of its lifetime. :contentReference[oaicite:2]{index=2}
+Once the payload has finished executing, it is immediately encoded, encrypted, and protected with **PAGE_NOACCESS** again. This cycle repeats for every execution attempt, allowing the payload to remain in an unreadable state for the majority of its lifetime.
 
 ---
 
 # Implementation
 
-The implementation begins by loading an AES-encrypted and Base64-encoded shellcode file into memory. A sufficiently large buffer is allocated using `VirtualAlloc`, after which the encoded payload is copied into the allocated region. A Vectored Exception Handler is then registered and the payload memory is protected using `PAGE_NOACCESS`. :contentReference[oaicite:3]{index=3}
+The implementation begins by loading an AES-encrypted and Base64-encoded shellcode file into memory. A sufficiently large buffer is allocated using `VirtualAlloc`, after which the encoded payload is copied into the allocated region. A Vectored Exception Handler is then registered and the payload memory is protected using `PAGE_NOACCESS`.
 
-Whenever execution is attempted, the memory protection causes a **STATUS_ACCESS_VIOLATION**. The VEH verifies that the faulting address belongs to the protected payload, temporarily restores read/write access, decrypts the payload using AES, decodes the Base64 representation, and finally changes the protection to `PAGE_EXECUTE_READ` before allowing execution to continue. :contentReference[oaicite:4]{index=4}
+Whenever execution is attempted, the memory protection causes a **STATUS_ACCESS_VIOLATION**. The VEH verifies that the faulting address belongs to the protected payload, temporarily restores read/write access, decrypts the payload using AES, decodes the Base64 representation, and finally changes the protection to `PAGE_EXECUTE_READ` before allowing execution to continue.
 
-After the shellcode thread completes, the payload is transformed back into its protected representation by Base64 encoding, AES encrypting, and restoring `PAGE_NOACCESS`. This sequence is repeated indefinitely, demonstrating a continuous cycle of runtime restoration and protection. :contentReference[oaicite:5]{index=5}
+After the shellcode thread completes, the payload is transformed back into its protected representation by Base64 encoding, AES encrypting, and restoring `PAGE_NOACCESS`. This sequence is repeated indefinitely, demonstrating a continuous cycle of runtime restoration and protection.
 
 ---
 
