@@ -1,0 +1,130 @@
+# Lazy Page Decryption
+
+## Overview
+
+This proof of concept demonstrates a **lazy page-by-page decryption** mechanism implemented using **Vectored Exception Handling (VEH)**, **PAGE_GUARD**, and the processor's **Trap Flag (TF)**. Unlike traditional runtime decryption techniques that restore an entire payload before execution, this implementation decrypts only the page currently being executed while keeping every other page encrypted.
+
+Each memory page initially contains XOR-encrypted shellcode protected with `PAGE_GUARD`. The first access to a guarded page generates a `STATUS_GUARD_PAGE_VIOLATION`, allowing the registered exception handler to decrypt only that page before resuming execution. Once execution leaves the page, a `STATUS_SINGLE_STEP` exception detects the transition, allowing the previously executed page to be immediately re-encrypted and protected with `PAGE_GUARD` again.
+
+As a result, only the currently executing page exists in plaintext at any given time while all remaining pages remain encrypted and guarded throughout execution.
+
+---
+
+# Implementation
+
+The implementation begins by loading a shellcode payload into memory before encrypting it using a simple XOR transformation. The payload is divided into memory pages, each of which is individually protected using `PAGE_EXECUTE_READ | PAGE_GUARD`. Finally, a Vectored Exception Handler is registered before execution begins.
+
+Whenever execution enters a guarded page, Windows raises a `STATUS_GUARD_PAGE_VIOLATION`. The exception handler determines which page generated the fault, temporarily removes the protection, decrypts only that page, restores executable permissions, enables the processor's Trap Flag, and resumes execution. 
+
+With the Trap Flag enabled, the processor generates a `STATUS_SINGLE_STEP` exception after every executed instruction. The handler continuously checks whether execution is still inside the current page. Once execution transitions to another page or leaves the shellcode region entirely, the previously executed page is re-encrypted, `PAGE_GUARD` is reapplied, and single stepping is disabled until another guarded page is encountered.
+
+This creates a continuous cycle where pages are decrypted only when required for execution and immediately restored to their encrypted state once execution moves elsewhere.
+
+---
+
+# Code Walkthrough
+
+### Loading and encrypting the payload
+
+The shellcode is loaded into dynamically allocated memory before being encrypted using a XOR transformation. This encrypted representation remains in memory until execution reaches a protected page.
+
+---
+
+### Guarding every memory page
+
+The allocated region is divided into page-sized blocks. Each page is individually protected using `PAGE_EXECUTE_READ | PAGE_GUARD`, allowing every page to generate its own guard page exception independently.
+
+---
+
+### Lazy page restoration
+
+Whenever execution reaches a protected page, the VEH identifies which page generated the exception, temporarily removes the protection, decrypts that page, restores executable permissions, enables the Trap Flag, and resumes execution.
+
+---
+
+### Monitoring execution
+
+With the Trap Flag enabled, Windows generates a `STATUS_SINGLE_STEP` exception after every executed instruction. The handler continuously monitors the instruction pointer to determine whether execution remains inside the current page.
+
+---
+
+### Restoring the protected state
+
+As soon as execution leaves the page, the handler temporarily restores write access, re-encrypts the page, reapplies `PAGE_GUARD`, clears the Trap Flag, and waits until another page generates a guard page violation.
+
+---
+
+# Execution Flow
+
+```text
+Load Shellcode
+        ↓
+XOR Encrypt Payload
+        ↓
+Split Into Memory Pages
+        ↓
+Apply PAGE_GUARD To Every Page
+        ↓
+Register VEH
+        ↓
+Execute Shellcode
+        ↓
+STATUS_GUARD_PAGE_VIOLATION
+        ↓
+Identify Current Page
+        ↓
+Decrypt Current Page
+        ↓
+PAGE_EXECUTE_READ
+        ↓
+Enable Trap Flag
+        ↓
+Resume Execution
+        ↓
+STATUS_SINGLE_STEP
+        ↓
+Still Inside Current Page?
+      ↙           ↘
+    Yes            No
+     ↓              ↓
+Continue      Re-encrypt Page
+Stepping            ↓
+              Apply PAGE_GUARD
+                    ↓
+             Disable Trap Flag
+                    ↓
+          Wait For Next Guard Fault
+```
+
+---
+
+# Expected Output
+
+During execution the console demonstrates the page lifecycle:
+
+- Detection of guard page violations.
+- Decryption of the page currently being executed.
+- Execution continuing normally.
+- Detection that execution has left the page.
+- Immediate re-encryption and restoration of `PAGE_GUARD`.
+
+https://github.com/user-attachments/assets/1f7991e2-8517-4405-b480-2c4dfaff45e8
+---
+
+# Notes
+
+- Only one memory page exists in plaintext at any given time.
+- Page restoration is triggered by `STATUS_GUARD_PAGE_VIOLATION`.
+- Page re-encryption is triggered using processor single-step exceptions generated by the Trap Flag.
+- Every page independently cycles between encrypted and decrypted states throughout execution.
+- The implementation demonstrates fine-grained runtime memory protection rather than whole-payload restoration.
+
+---
+
+# References
+
+- Microsoft. *AddVectoredExceptionHandler*
+- Microsoft. *VirtualProtect*
+- Microsoft. *PAGE_GUARD*
+- Microsoft. *Trap Flag (TF)*
+- Microsoft. *Structured Exception Handling*
