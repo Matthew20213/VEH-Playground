@@ -119,7 +119,10 @@ Return to Caller
 
 ## Demonstration
 
-https://youtu.be/e4wRpPtxdN8
+A video demonstration accompanies this proof of concept. Since GitHub does not support embedding larger videos directly within Markdown documentation, the recording is available at the link below.
+
+▶️ **Ninja Guard Demonstration**
+https://youtu.be/e4wRpPtxdN8?si=2slWc7O2n6JLezv4
 
 ---
 
