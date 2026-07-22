@@ -87,7 +87,7 @@ Resume Execution
 
 ## Expected Output
 
-Figure 4 demonstrates untime processor context modification, showing the original RCX register value before being replaced with 0x1337 by the vectored exception handler.
+Figure 4 demonstrates runtime processor context modification, showing the original RCX register value before being replaced with 0x1337 by the vectored exception handler.
 
 <p align="center">
     <img src="../assets/Context-Modification.png" width="700">
