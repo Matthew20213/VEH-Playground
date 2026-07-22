@@ -37,8 +37,7 @@ The captured processor context is accessed through the `ContextRecord` member of
 Instead of modifying a general-purpose register, this PoC replaces the saved instruction pointer:
 
 ```cpp
-ExceptionInfo->ContextRecord->Rip =
-    reinterpret_cast<DWORD64>(&CustomHandler);
+ExceptionInfo->ContextRecord->Rip = reinterpret_cast<DWORD64>(&CustomHandler);
 ```
 
 By modifying `RIP`, execution resumes at the specified function rather than the instruction that originally generated the exception.
