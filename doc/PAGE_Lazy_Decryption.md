@@ -109,6 +109,7 @@ During execution the console demonstrates the page lifecycle:
 - Immediate re-encryption and restoration of `PAGE_GUARD`.
 
 https://github.com/user-attachments/assets/1f7991e2-8517-4405-b480-2c4dfaff45e8
+
 ---
 
 # Notes
