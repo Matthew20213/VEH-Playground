@@ -128,4 +128,3 @@ https://github.com/user-attachments/assets/1f7991e2-8517-4405-b480-2c4dfaff45e8
 - Microsoft. *VirtualProtect*
 - Microsoft. *PAGE_GUARD*
 - Microsoft. *Trap Flag (TF)*
-- Microsoft. *Structured Exception Handling*

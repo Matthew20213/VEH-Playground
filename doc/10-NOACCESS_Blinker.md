@@ -117,5 +117,4 @@ https://github.com/user-attachments/assets/8c9e4f74-4890-4df5-b21b-43ab8fa729f2
 
 - Microsoft. *AddVectoredExceptionHandler*
 - Microsoft. *VirtualProtect*
-- Microsoft. *Structured Exception Handling*
 - Microsoft. *Cryptography API: Next Generation*
