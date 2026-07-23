@@ -3,9 +3,7 @@
 <p align="center">
 
 ![Windows](https://img.shields.io/badge/Platform-Windows-blue)
-![Language](https://img.shields.io/badge/Language-C%2B%2B-green)
 ![Purpose](https://img.shields.io/badge/Purpose-Research-purple)
-![Architecture](https://img.shields.io/badge/x64-Windows-informational)
 
 </p>
 
