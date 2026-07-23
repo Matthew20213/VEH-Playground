@@ -12,9 +12,9 @@ Multiple handlers are registered at both the front and back of the VEH chain. Wh
 
 This PoC registers four vectored exception handlers.
 
-Two handlers are inserted at the beginning of the VEH chain using a priority value of `1`, while the remaining handlers are inserted at the end of the chain using a priority value of `0`. :contentReference[oaicite:1]{index=1}
+Two handlers are inserted at the beginning of the VEH chain using a priority value of `1`, while the remaining handlers are inserted at the end of the chain using a priority value of `0`.
 
-An access violation is then raised using `RaiseException()`, allowing the order of handler execution to be observed. :contentReference[oaicite:2]{index=2}
+An access violation is then raised using `RaiseException()`, allowing the order of handler execution to be observed.
 
 ---
 
