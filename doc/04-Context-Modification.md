@@ -94,7 +94,7 @@ Figure 4 demonstrates runtime processor context modification, showing the origin
 </p>
 
 <p align="center">
-<i>Figure4 - Successful execution of the Context-Modification proof of concept.</i>
+<i>Figure 4 - Successful execution of the Context-Modification proof of concept.</i>
 </p>
 
 ---

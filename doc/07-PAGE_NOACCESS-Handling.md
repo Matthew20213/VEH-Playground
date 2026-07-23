@@ -113,7 +113,7 @@ Figure 7 demonstrates generating STATUS_ACCESS_VIOLATION when accessing a PAGE_N
 </p>
 
 <p align="center">
-<i>Figure7 - Successful execution of the PAGE_NOACCESS-Handling proof of concept.</i>
+<i>Figure 7 - Successful execution of the PAGE_NOACCESS-Handling proof of concept.</i>
 </p>
 
 ---

@@ -103,7 +103,7 @@ Figure 3 demonstrates the information exposed through the EXCEPTION_POINTERS str
 </p>
 
 <p align="center">
-<i>Figure3 - Successful execution of the Exception Information proof of concept.</i>
+<i>Figure 3 - Successful execution of the Exception Information proof of concept.</i>
 </p>
 
 ---

@@ -88,7 +88,7 @@ Figure 2 demonstrates the execution order of the registered vectored exception h
 </p>
 
 <p align="center">
-<i>Figure2 - Successful execution of the Handler Priority proof of concept.</i>
+<i>Figure 2 - Successful execution of the Handler Priority proof of concept.</i>
 </p>
 
 ---

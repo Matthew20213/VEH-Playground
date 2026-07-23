@@ -99,7 +99,7 @@ Figure 5 demonstrates execution flow redirection by replacing the captured instr
 </p>
 
 <p align="center">
-<i>Figure5 - Successful execution of the RIP-Redirection proof of concept.</i>
+<i>Figure 5 - Successful execution of the RIP-Redirection proof of concept.</i>
 </p>
 
 ---

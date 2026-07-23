@@ -114,7 +114,7 @@ Figure 6 demonstrates generating STATUS_GUARD_PAGE_VIOLATION during the first ac
 </p>
 
 <p align="center">
-<i>Figure6 - Successful execution of the PAGE_GUARD-Handling proof of concept.</i>
+<i>Figure 6 - Successful execution of the PAGE_GUARD-Handling proof of concept.</i>
 </p>
 
 ---
